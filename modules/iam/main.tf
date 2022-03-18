@@ -1,21 +1,19 @@
 resource "aws_iam_role" "inspector_event_role" {
-  name  = "inspector-event-role-${var.random_id_prefix}"
+  name = "inspector-event-role-${var.random_id_prefix}"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "events.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : "sts:AssumeRole",
+        "Principal" : {
+          "Service" : "events.amazonaws.com"
+        },
+        "Effect" : "Allow",
+        "Sid" : ""
+      }
+    ]
+  })
 }
 
 data "aws_iam_policy_document" "inspector_event_role_policy" {
